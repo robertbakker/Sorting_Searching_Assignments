@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.11.27)  27 NOV 2016 17:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.11.27)  27 NOV 2016 17:25
 entering extended mode
 **./practicum1.tex
 (practicum1.tex
@@ -1066,7 +1066,7 @@ Overfull \hbox (12.13261pt too wide) in paragraph at lines 170--170
 [2
 
 ]
-Overfull \hbox (30.95657pt too wide) in paragraph at lines 240--240
+Overfull \hbox (30.95657pt too wide) in paragraph at lines 242--242
 |[]\OT1/cmr/bx/n/17.28 Resultaten in een Bi-nary Search Tree en im-ple-men-ta-t
 ie
  []
@@ -1074,7 +1074,7 @@ ie
 [3] (practicum1.aux) ) 
 Here is how much of TeX's memory you used:
  25998 strings out of 493333
- 630934 string characters out of 3139190
+ 630941 string characters out of 3139190
  861127 words of memory out of 3000000
  29080 multiletter control sequences out of 15000+200000
  10519 words of font info for 37 fonts, out of 3000000 for 9000
@@ -1088,7 +1088,7 @@ m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9
 /fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
 ype1/public/amsfonts/cm/cmtt10.pfb>
-Output written on practicum1.pdf (4 pages, 220361 bytes).
+Output written on practicum1.pdf (4 pages, 220411 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

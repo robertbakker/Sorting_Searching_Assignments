@@ -51,7 +51,6 @@ public class MainPracticum1 {
         long[] quicksortResults = new long[numberOfStudents.length];
         long[] threewayResults = new long[numberOfStudents.length];
 
-        boolean warmingUp = true;
         for (int i = 0; i < numberOfStudents.length; i++) {
             ResultList list = StudentListGenerator.generate(numberOfStudents[i]);
             list.shuffle();
@@ -65,11 +64,6 @@ public class MainPracticum1 {
             list.threewayQuicksort();
             long endTime2 = System.nanoTime();
             threewayResults[i] = (endTime2 - startTime1);
-
-            if(warmingUp) {
-                i=-1;
-                warmingUp = false;
-            }
         }
 
         System.out.println("\\addplot+[smooth] coordinates");

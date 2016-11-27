@@ -219,12 +219,14 @@ IVSE4
 
 \begin{tikzpicture}
   \begin{axis}[mystyle]
+  \addlegendentry{$Quicksort$}
+  \addlegendentry{$Quicksort\ met\ Median$}
 \addplot+[smooth] coordinates
-{(10000, 18348114) (20000, 7256880) (40000, 14340130) (80000, 40873563) (160000, 58241490) };
-\addlegendentry{$Quicksort$}
+{(10000, 32418821) (20000, 72854465) (40000, 152722902) (80000, 349821005) (160000, 770648150) };
+
 \addplot+[smooth] coordinates
-{(10000, 15108199) (20000, 47647191) (40000, 22948400) (80000, 63645340) (160000, 81564516) };
-\addlegendentry{$Quicksort\ met\ Median$}
+{(10000, 59946551) (20000, 83454751) (40000, 156851911) (80000, 354702260) (160000, 795273813) };
+
   \end{axis}
 \end{tikzpicture}
 
