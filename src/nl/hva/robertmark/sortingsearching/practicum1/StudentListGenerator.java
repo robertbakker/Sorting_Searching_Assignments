@@ -24,7 +24,7 @@ public class StudentListGenerator {
 
         ResultList results = new ResultList(students, totalGroups);
 
-        int baseStudentNumber = 50060001;
+        int baseStudentNumber = BASE_STUDENT_NUMBER;
         int groupNumber = 1;
         for (int i = 0; i < students; i++) {
 

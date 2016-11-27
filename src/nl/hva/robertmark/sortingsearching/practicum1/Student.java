@@ -21,6 +21,8 @@ public class Student implements Comparable<Student> {
     public int compareTo(Student that) {
         if (this.grade < that.getGrade()) return 1;
         if (this.grade > that.getGrade()) return -1;
+        if(this.studentNumber > that.getStudentNumber()) return -1;
+        if(this.studentNumber < that.getStudentNumber()) return 1;
 
         return 0;
     }
