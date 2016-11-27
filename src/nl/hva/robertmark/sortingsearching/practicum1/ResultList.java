@@ -7,8 +7,8 @@ import nl.hva.dmci.ict.inf.ads.lib.StdRandom;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
- *
  * @author Robert
  */
 public class ResultList {
@@ -37,27 +37,31 @@ public class ResultList {
     }
 
     public void sort() {
-        quicksort(studentList, 0, studentList.length-1);
-    }
-    public void threewayQuicksort(){
-        threeWay(studentList, 0, studentList.length-1);
+        quicksort(studentList, 0, studentList.length - 1);
     }
 
-    private static void exch(Comparable[] a, int i, int j)
-    { Comparable t = a[i]; a[i] = a[j]; a[j] = t; }
+    public void threewayQuicksort() {
+        threeWay(studentList, 0, studentList.length - 1);
+    }
 
-    public void threeWay(Comparable[] list, int lo, int hi){
-        if ( hi <= lo) return;
-        int lt = lo, i = lo+1, gt = hi;
+    private static void exch(Comparable[] a, int i, int j) {
+        Comparable t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+
+    public void threeWay(Comparable[] list, int lo, int hi) {
+        if (hi <= lo) return;
+        int lt = lo, i = lo + 1, gt = hi;
         Comparable v = list[lo];
-        while(i <= gt){
+        while (i <= gt) {
             int cmp = list[i].compareTo(v);
-            if(cmp < 0) exch(list, lt++, i++);
-            else if(cmp > 0 ) exch(list, i , gt--);
+            if (cmp < 0) exch(list, lt++, i++);
+            else if (cmp > 0) exch(list, i, gt--);
             else i++;
         }
         threeWay(list, lo, lt - 1);
-        threeWay(list, gt +1, hi);
+        threeWay(list, gt + 1, hi);
     }
 
     // De quicksort accepteert een lijst van objecten met een comparable

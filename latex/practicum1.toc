@@ -1,11 +1,13 @@
 \select@language {dutch}
 \contentsline {section}{\numberline {a}Resultaten van studenten sorteren met een advanced sort}{2}
-\contentsline {subsection}{\numberline {a.1}Advanced sort toevoegen}{2}
-\contentsline {subsection}{\numberline {a.2}Effici\IeC {\"e}ntie - Experiment}{3}
-\contentsline {subsection}{\numberline {a.3}Big O}{3}
-\contentsline {section}{\numberline {b}Verbetering toevoegen aan algoritme}{4}
-\contentsline {subsection}{\numberline {b.1}Experiment}{4}
-\contentsline {subsection}{\numberline {b.2}Big O}{4}
-\contentsline {section}{\numberline {c}Resultaten in een Binary Search Tree en implementatie van rank()}{4}
-\contentsline {subsection}{\numberline {c.1}BST implementatie rank}{4}
-\contentsline {subsection}{\numberline {c.2}output rank}{5}
+\contentsline {subsection}{\numberline {a.1}Quicksort implemenatie}{3}
+\contentsline {subsection}{\numberline {a.2}Resultaten experiment}{4}
+\contentsline {subsection}{\numberline {a.3}Effici\IeC {\"e}ntie}{6}
+\contentsline {section}{\numberline {b}Verbetering toevoegen aan algoritme}{6}
+\contentsline {subsection}{\numberline {b.1}Experiment}{6}
+\contentsline {subsection}{\numberline {b.2}Effici\IeC {\"e}ntie}{8}
+\contentsline {section}{\numberline {c}Resultaten in een Binary Search Tree en implementatie van rank()}{9}
+\contentsline {subsection}{\numberline {c.1}Duplicaten}{9}
+\contentsline {subsection}{\numberline {c.2}Rank()}{10}
+\contentsline {subsubsection}{\numberline {c.2.1}BST implementatie rank()}{10}
+\contentsline {subsubsection}{\numberline {c.2.2}Voorbeeld data voor rank}{11}
