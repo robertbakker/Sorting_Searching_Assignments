@@ -17,15 +17,15 @@ public class MainPracticum1 {
     public void run() {
         ResultList list = StudentListGenerator.generate(10000);
         list.shuffle();
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         list.sort();
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long durationQuickSort = (endTime - startTime);
 
         list.shuffle();
-        long startTime1 = System.nanoTime();
+        long startTime1 = System.currentTimeMillis();
         list.threewayQuicksort();
-        long endTime2 = System.nanoTime();
+        long endTime2 = System.currentTimeMillis();
         long durationThreeway = (endTime2 - startTime1);
 
         System.out.println(list);
@@ -46,37 +46,78 @@ public class MainPracticum1 {
         measureQuicksorts();
     }
 
+    private static final int N_EXPERIMENTS = 1;
+
     private void measureQuicksorts() {
         int[] numberOfStudents = {10000, 20000, 40000, 80000, 160000};
-        long[] quicksortResults = new long[numberOfStudents.length];
-        long[] threewayResults = new long[numberOfStudents.length];
+        long[][] quicksortResults = new long[numberOfStudents.length][N_EXPERIMENTS];
+        long[][] threewayResults = new long[numberOfStudents.length][N_EXPERIMENTS];
 
         for (int i = 0; i < numberOfStudents.length; i++) {
-            ResultList list = StudentListGenerator.generate(numberOfStudents[i]);
-            list.shuffle();
-            long startTime = System.nanoTime();
-            list.sort();
-            long endTime = System.nanoTime();
-            quicksortResults[i] = (endTime - startTime);
+            for (int j = 0; j < N_EXPERIMENTS; j++) {
+                ResultList list = StudentListGenerator.generate(numberOfStudents[i]);
+                list.shuffle();
+                long startTime = System.currentTimeMillis();
+                list.sort();
+                long endTime = System.currentTimeMillis();
+                quicksortResults[i][j] = (endTime - startTime);
 
-            list.shuffle();
-            long startTime1 = System.nanoTime();
-            list.threewayQuicksort();
-            long endTime2 = System.nanoTime();
-            threewayResults[i] = (endTime2 - startTime1);
+                ResultList list2 = StudentListGenerator.generate(numberOfStudents[i]);
+                list2.shuffle();
+                long startTime1 = System.currentTimeMillis();
+                list2.threewayQuicksort();
+                long endTime2 = System.currentTimeMillis();
+                threewayResults[i][j] = (endTime2 - startTime1);
+            }
         }
 
-        System.out.println("\\addplot+[smooth] coordinates");
-        System.out.print("{");
-        for(int i =0; i<quicksortResults.length;i++) {
-            System.out.print(String.format("(%d, %s) ", numberOfStudents[i], quicksortResults[i]));
-        }
-        System.out.println("};");
+        printPlotLine(numberOfStudents, quicksortResults);
         System.out.println();
+        printPlotLine(numberOfStudents, threewayResults);
+
+        printTable(numberOfStudents, quicksortResults);
+    }
+
+    private void printTable(int[] numberOfStudents, long[][] results) {
+
+        System.out.println("\\begin{table}[]");
+        System.out.print("\\begin{tabular}{|");
+        for (int i = 0; i < N_EXPERIMENTS + 2; i++) {
+            System.out.print("1|");
+        }
+        System.out.println("}");
+        System.out.println("\\hline");
+        System.out.print("Aantal studenten");
+        for (int i = 0; i < N_EXPERIMENTS; i++) {
+            System.out.print(" & Run " + (i+1));
+        }
+        System.out.print(" & Gemiddelde");
+        System.out.println("\\\\ \\hline");
+
+        for(int i = 0; i < numberOfStudents.length; i++) {
+            System.out.print(numberOfStudents[i]);
+            long sum = 0;
+            for (int j = 0; j < N_EXPERIMENTS; j++) {
+                sum += results[i][j];
+                System.out.print(" & " + results[i][j]);
+            }
+            long average = sum / results[i].length;
+            System.out.print(" & " + average);
+            System.out.println("\\\\ \\hline");
+        }
+
+
+        System.out.println("\\end{tabular}\n" +
+                "\\end{table}");
+    }
+    private void printPlotLine(int[] numberOfStudents, long[][] threewayResults) {
         System.out.println("\\addplot+[smooth] coordinates");
         System.out.print("{");
-        for(int i =0; i<threewayResults.length;i++) {
-            System.out.print(String.format("(%d, %s) ", numberOfStudents[i], threewayResults[i]));
+        for (int i = 0; i < threewayResults.length; i++) {
+            long sum = 0;
+            for (long j : threewayResults[i]) sum += j;
+            long average = sum / threewayResults[i].length;
+            System.out.print(String.format("(%d, %s) ", numberOfStudents[i], average));
         }
         System.out.println("};");
     }
