@@ -10,7 +10,7 @@ public class MainPracticum1 {
      */
     public static void main(String[] args) throws InterruptedException {
 
-        ResultList list = StudentListGenerator.generate(30);
+        ResultList list = StudentListGenerator.generate(10000);
         list.shuffle();
         list.sort();
         System.out.println(list);
