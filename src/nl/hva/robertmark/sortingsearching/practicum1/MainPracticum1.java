@@ -14,9 +14,14 @@ public class MainPracticum1 {
         list.shuffle();
         long startTime = System.nanoTime();
         list.sort();
-        list.threewayQuicksort();
         long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
+        long durationQuickSort = (endTime - startTime);
+
+        list.shuffle();
+        long startTime1 = System.nanoTime();
+        list.threewayQuicksort();
+        long endTime2 = System.nanoTime();
+        long durationThreeway = (endTime2 - startTime1);
 
         System.out.println(list);
 
@@ -30,7 +35,8 @@ public class MainPracticum1 {
             System.out.println("Grade: " + i + ", rank: " + bst.rank((float) i));
         }
         System.out.println(bst.get(1.2f));
-        System.out.print("Duration of sort: " + duration);
+        System.out.println("Duration of Quicksort: " + durationQuickSort);
+        System.out.println("Duration of ThreewaySort: " + durationThreeway);
     }
 
 }
