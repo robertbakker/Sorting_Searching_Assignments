@@ -1,0 +1,222 @@
+\documentclass[12pt,notitlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage[dutch]{babel}
+\usepackage{graphicx}
+
+\usepackage{blindtext}
+\usepackage[final]{pdfpages}
+\usepackage[a4paper, total={6.3in,9in},footskip=76pt]{geometry}
+
+
+% make section start with Alphabet letters
+\renewcommand{\thesection}{\alph{section}}
+
+
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+% turn off word breaking
+\usepackage{hyphenat}
+\hyphenpenalty 10000
+\exhyphenpenalty 10000
+\raggedright
+
+% make paragraphs with line spacing
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+
+% Set up code listings for Java
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+%--- MAKE NEW SUBSUBSUBSECTION COMMAND---------------------------------------------------
+\usepackage{titlesec}
+\usepackage{hyperref}
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+
+%----------------------------------------------------------------------------------------
+%	ONDERZOEKSVOORSTEL
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\center % Center everything on the page
+
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{hva-logo.png}
+\end{figure}
+\textsc{\LARGE Hogeschool van Amsterdam}\\[1.5cm] % Name of your university/college
+\textsc{\Large Sorting \& Searching}\\[0.5cm] % Major heading such as course name
+\textsc{\large Efficiëntie van geavanceerde sorteeralgoritmes}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Practicum 1}\\[0.2cm] % Title of your document
+\HRule \\[1.2cm]
+
+% Optimalisatie van gegevensverwerking voor iLocate
+
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Robert \textsc{Bakker} % Your name
+\linebreak
+\linebreak
+\emph{Studentnummer:}\\
+500689284
+\linebreak
+\linebreak
+\emph{Klas:}\\
+IVSE4
+
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Author:}\\
+Robert \textsc{Bakker} % Your name
+\linebreak
+\linebreak
+\emph{Studentnummer:}\\
+500689284
+\linebreak
+\linebreak
+\emph{Klas:}\\
+IVSE4
+\end{flushright}
+\end{minipage}\\[4cm]
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large Blok 2, 2016 - 2017}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+\renewcommand{\contentsname}{Inhoudsopgave}
+\tableofcontents
+\clearpage
+
+%----------------------------------------------------------------------------------------
+%	Opdracht a
+%----------------------------------------------------------------------------------------
+
+\section{Resultaten van studenten sorteren met een advanced sort}
+
+
+\begin{lstlisting}
+// Hello.java
+import javax.swing.JApplet;
+import java.awt.Graphics;
+
+public class Hello extends JApplet {
+    public void paintComponent(Graphics g) {
+        g.drawString("Hello, world!", 65, 95);
+    }
+}
+\end{lstlisting}
+
+
+\subsection{Advanced sort toevoegen}
+\subsection{Efficiëntie}
+
+%----------------------------------------------------------------------------------------
+%	Opdracht b
+%----------------------------------------------------------------------------------------
+\section{Verbetering toevoegen aan algoritme}
+
+%----------------------------------------------------------------------------------------
+%	Opdracht c
+%----------------------------------------------------------------------------------------
+\section{Resultaten in een Binary Search Tree en implementatie van rank()}
+
+\end{document}
