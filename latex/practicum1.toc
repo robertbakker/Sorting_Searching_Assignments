@@ -4,3 +4,5 @@
 \contentsline {subsection}{\numberline {a.2}Effici\IeC {\"e}ntie}{3}
 \contentsline {section}{\numberline {b}Verbetering toevoegen aan algoritme}{3}
 \contentsline {section}{\numberline {c}Resultaten in een Binary Search Tree en implementatie van rank()}{3}
+\contentsline {subsection}{\numberline {c.1}BST implementatie rank}{3}
+\contentsline {subsection}{\numberline {c.2}output rank}{4}

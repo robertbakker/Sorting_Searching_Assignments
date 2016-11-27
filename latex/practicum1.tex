@@ -241,4 +241,39 @@ IVSE4
 %----------------------------------------------------------------------------------------
 \section{Resultaten in een Binary Search Tree en implementatie van rank()}
 
+De input is een lijst van studenten bestaand uit een cijfer en studentnummer. De input set bestaat uit 10000 studenten. Op deze set  voeren wij de rank method uit. om te tellen welke hoeveel studenten lager dan een bepaald cijfer hebben behaald. \\
+
+
+\subsection{BST implementatie rank}
+
+\begin{lstlisting}
+
+ private int rank(Key key, Node x) {
+        if (x == null) {
+            return 0;
+        }
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            return rank(key, x.left);
+        } else if (cmp > 0) {
+            return x.val.size() + size(x.left) + rank(key, x.right);
+        } else {
+            return size(x.left);
+        }
+    }
+\end{lstlisting}
+\subsection{output rank}
+Grade: 1, rank: 0 \\
+Grade: 2, rank: 1111 \\
+Grade: 3, rank: 2154 \\
+Grade: 4, rank: 3297 \\
+Grade: 5, rank: 4471 \\
+Grade: 6, rank: 5564 \\
+Grade: 7, rank: 6713 \\
+Grade: 8, rank: 7826 \\
+Grade: 9, rank: 8900 \\
+Grade: 10, rank: 10000
+
+\end{document}
+
 \end{document}
