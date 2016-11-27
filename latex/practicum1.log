@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.9.9)  27 NOV 2016 19:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.9.9)  27 NOV 2016 19:24
 entering extended mode
 **./practicum1.tex
 (practicum1.tex
@@ -1092,21 +1092,21 @@ Overfull \hbox (12.13261pt too wide) in paragraph at lines 170--170
 
 [2
 
-]
-Overfull \hbox (30.95657pt too wide) in paragraph at lines 242--242
+] [3]
+Overfull \hbox (30.95657pt too wide) in paragraph at lines 252--252
 |[]\OT1/cmr/bx/n/17.28 Resultaten in een Bi-nary Search Tree en im-ple-men-ta-t
 ie
  []
 
-[3] [4] (practicum1.aux) ) 
+[4] [5] (practicum1.aux) ) 
 Here is how much of TeX's memory you used:
- 26007 strings out of 493334
- 633104 string characters out of 3136676
+ 26017 strings out of 493334
+ 633288 string characters out of 3136676
  861127 words of memory out of 3000000
- 29090 multiletter control sequences out of 15000+200000
+ 29100 multiletter control sequences out of 15000+200000
  10519 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,17n,103p,733b,2140s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,17n,103p,733b,2138s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmcsc10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
@@ -1116,9 +1116,9 @@ s/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmt
 t10.pfb>
-Output written on practicum1.pdf (5 pages, 223921 bytes).
+Output written on practicum1.pdf (6 pages, 228252 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
+ 59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

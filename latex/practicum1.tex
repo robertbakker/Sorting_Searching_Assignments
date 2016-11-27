@@ -214,27 +214,37 @@ IVSE4
     }
 \end{lstlisting}
 
-\subsection{Efficiëntie}
+\subsection{Efficiëntie - Experiment}
 
 
 \begin{tikzpicture}
   \begin{axis}[mystyle]
   \addlegendentry{$Quicksort$}
-  \addlegendentry{$Quicksort\ met\ Median$}
 \addplot+[smooth] coordinates
 {(10000, 32418821) (20000, 72854465) (40000, 152722902) (80000, 349821005) (160000, 770648150) };
 
+  \end{axis}
+\end{tikzpicture}
+
+\subsection{Big O}
+
+2n(log(n))
+%----------------------------------------------------------------------------------------
+%	Opdracht b
+%----------------------------------------------------------------------------------------
+\section{Verbetering toevoegen aan algoritme}
+
+\subsection{Experiment}
+\begin{tikzpicture}
+  \begin{axis}[mystyle]
+  \addlegendentry{$Quicksort\ met\ Median$}
 \addplot+[smooth] coordinates
 {(10000, 59946551) (20000, 83454751) (40000, 156851911) (80000, 354702260) (160000, 795273813) };
 
   \end{axis}
 \end{tikzpicture}
+\subsection{Big O}
 
-
-%----------------------------------------------------------------------------------------
-%	Opdracht b
-%----------------------------------------------------------------------------------------
-\section{Verbetering toevoegen aan algoritme}
 
 %----------------------------------------------------------------------------------------
 %	Opdracht c
