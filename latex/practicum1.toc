@@ -1,0 +1,6 @@
+\select@language {dutch}
+\contentsline {section}{\numberline {a}Resultaten van studenten sorteren met een advanced sort}{2}
+\contentsline {subsection}{\numberline {a.1}Advanced sort toevoegen}{2}
+\contentsline {subsection}{\numberline {a.2}Effici\IeC {\"e}ntie}{3}
+\contentsline {section}{\numberline {b}Verbetering toevoegen aan algoritme}{3}
+\contentsline {section}{\numberline {c}Resultaten in een Binary Search Tree en implementatie van rank()}{3}

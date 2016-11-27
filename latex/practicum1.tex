@@ -12,6 +12,20 @@
 % make section start with Alphabet letters
 \renewcommand{\thesection}{\alph{section}}
 
+% plots
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\pgfplotsset{mystyle/.style={%
+        width=6in,
+        ylabel={Sorting time in nanoseconds},
+        xlabel={Aantal studenten},
+        xmin=0,xmax=160000,
+        scaled y ticks = false,
+        scaled x ticks = false,	
+       	x tick label style={rotate=45, anchor=north east, inner sep=0mm},
+       	legend pos=north west
+        }}
+
 
 \usepackage{titlesec}
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
@@ -53,43 +67,6 @@
   breakatwhitespace=true,
   tabsize=3
 }
-
-
-
-%--- MAKE NEW SUBSUBSUBSECTION COMMAND---------------------------------------------------
-\usepackage{titlesec}
-\usepackage{hyperref}
-\titleclass{\subsubsubsection}{straight}[\subsection]
-
-\newcounter{subsubsubsection}[subsubsection]
-\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
-\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
-
-\titleformat{\subsubsubsection}
-  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
-\titlespacing*{\subsubsubsection}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-\makeatletter
-\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
-  {3.25ex \@plus1ex \@minus.2ex}%
-  {-1em}%
-  {\normalfont\normalsize\bfseries}}
-\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
-  {3.25ex \@plus1ex \@minus .2ex}%
-  {-1em}%
-  {\normalfont\normalsize\bfseries}}
-\def\toclevel@subsubsubsection{4}
-\def\toclevel@paragraph{5}
-\def\toclevel@paragraph{6}
-\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
-\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
-\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
-\makeatother
-
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
-%----------------------------------------------------------------------------------------
 
 \begin{document}
 
@@ -191,23 +168,66 @@ IVSE4
 %----------------------------------------------------------------------------------------
 
 \section{Resultaten van studenten sorteren met een advanced sort}
-
+\subsection{Advanced sort toevoegen}
 
 \begin{lstlisting}
-// Hello.java
-import javax.swing.JApplet;
-import java.awt.Graphics;
 
-public class Hello extends JApplet {
-    public void paintComponent(Graphics g) {
-        g.drawString("Hello, world!", 65, 95);
+    // De quicksort accepteert een lijst van objecten met een comparable
+    // interface, het beginpunt van links, en het beginpunt van rechts
+    private void quicksort(Comparable[] list, int low, int high) {
+
+        // Neem het middelpunt van de array als spil (draaipunt)
+        Comparable pivot = list[low + (high - low) / 2];
+
+        int i = low; // linkerkant
+        int j = high; // rechterkant
+
+        while (i <= j) {
+            // Wanneer object vanaf links kleiner is dan de spil
+            // Verschuif naar de volgende in de linkerlijst
+            while (list[i].compareTo(pivot) < 0) i++;
+
+            // Wanneer object vanaf rechts groter is dan de spil
+            // Verschuif naar de volgende in de rechterlijst
+            while (list[j].compareTo(pivot) > 0) j--;
+
+            // Als er een index van de linkerlijst is gevonden, met een waarde
+            // die groter is dan de spil, en een index in de rechterlijst met
+            // een waarde die kleiner is dan de spil, moeten de 2 waarden
+            // worden omgedraaid
+            if (i <= j) {
+                Comparable temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        // Hetzelfde voor de rest van de linkerlijst
+        if (low < j) {
+            quicksort(list, low, j);
+        }
+        // en voor de rechterlijst
+        if (high > i) {
+            quicksort(list, i, high);
+        }
     }
-}
 \end{lstlisting}
 
-
-\subsection{Advanced sort toevoegen}
 \subsection{Efficiëntie}
+
+
+\begin{tikzpicture}
+  \begin{axis}[mystyle]
+\addplot+[smooth] coordinates
+{(10000, 18348114) (20000, 7256880) (40000, 14340130) (80000, 40873563) (160000, 58241490) };
+\addlegendentry{$Quicksort$}
+\addplot+[smooth] coordinates
+{(10000, 15108199) (20000, 47647191) (40000, 22948400) (80000, 63645340) (160000, 81564516) };
+\addlegendentry{$Quicksort\ met\ Median$}
+  \end{axis}
+\end{tikzpicture}
+
 
 %----------------------------------------------------------------------------------------
 %	Opdracht b
