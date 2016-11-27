@@ -37,7 +37,24 @@ public class ResultList {
     }
 
     public void sort() {
-        quicksort(studentList, 0, studentList.length-1);
+        threeWay(studentList, 0, studentList.length-1);
+    }
+
+    private static void exch(Comparable[] a, int i, int j)
+    { Comparable t = a[i]; a[i] = a[j]; a[j] = t; }
+
+    public void threeWay(Comparable[] list, int lo, int hi){
+        if ( hi <= lo) return;
+        int lt = lo, i = lo+1, gt = hi;
+        Comparable v = list[lo];
+        while(i <= gt){
+            int cmp = list[i].compareTo(v);
+            if(cmp < 0) exch(list, lt++, i++);
+            else if(cmp > 0 ) exch(list, i , gt--);
+            else i++;
+        }
+        threeWay(list, lo, lt - 1);
+        threeWay(list, gt +1, hi);
     }
 
     // De quicksort accepteert een lijst van objecten met een comparable
