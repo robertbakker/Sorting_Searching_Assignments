@@ -37,6 +37,9 @@ public class ResultList {
     }
 
     public void sort() {
+        quicksort(studentList, 0, studentList.length-1);
+    }
+    public void threewayQuicksort(){
         threeWay(studentList, 0, studentList.length-1);
     }
 
