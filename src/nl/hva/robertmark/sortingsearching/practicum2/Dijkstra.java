@@ -1,9 +1,11 @@
 package nl.hva.robertmark.sortingsearching.practicum2;
 
 
-import sas.po2.lib.DirectedEdge;
-import sas.po2.lib.EdgeWeightedDigraph;
-import sas.po2.lib.IndexMinPQ;
+
+
+import nl.hva.dmci.ict.sortingsearching.weigthedgraph.DirectedEdge;
+import nl.hva.dmci.ict.sortingsearching.weigthedgraph.EdgeWeightedDigraph;
+import nl.hva.dmci.ict.sortingsearching.weigthedgraph.IndexMinPQ;
 
 import java.util.Stack;
 
