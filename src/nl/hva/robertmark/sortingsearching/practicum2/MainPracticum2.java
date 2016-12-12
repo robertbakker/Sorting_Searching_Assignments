@@ -24,8 +24,8 @@ public class MainPracticum2 {
                 EdgeWeightedDigraph ewd = new EdgeWeightedDigraph(naam);
                 Dijkstra dijkstra = new Dijkstra(ewd, ewd.getStart());
                 ewd.tekenPad(dijkstra.pathTo(ewd.getEnd(), naam));
-                ewd.show(naam, " dijkstra");
-                ewd.save(naam + " dijkstra");
+                ewd.show(naam, "_dijkstra");
+                ewd.save(naam + "_dijkstra");
             } catch (Exception e) {
 
             }
@@ -41,8 +41,8 @@ public class MainPracticum2 {
             AdjMatrixEdgeWeightedDigraph amewd = ewd.createAdjMatrixEdgeWeightedDigraph();
             FloydWarshall floyd = new FloydWarshall(amewd);
             ewd.tekenPad(floyd.path(ewd.getStart(), ewd.getEnd(), naam));
-            ewd.show(naam, " floyd");
-            ewd.save(naam + " floyd");
+            ewd.show(naam, "_floyd");
+            ewd.save(naam + "_floyd");
 //            }
         }
     }
