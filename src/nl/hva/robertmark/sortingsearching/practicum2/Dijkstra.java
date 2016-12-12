@@ -1,8 +1,5 @@
 package nl.hva.robertmark.sortingsearching.practicum2;
 
-
-
-
 import nl.hva.dmci.ict.sortingsearching.weigthedgraph.DirectedEdge;
 import nl.hva.dmci.ict.sortingsearching.weigthedgraph.EdgeWeightedDigraph;
 import nl.hva.dmci.ict.sortingsearching.weigthedgraph.IndexMinPQ;

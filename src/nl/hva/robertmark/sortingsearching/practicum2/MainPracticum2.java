@@ -1,7 +1,7 @@
 package nl.hva.robertmark.sortingsearching.practicum2;
 
-import sas.po2.lib.AdjMatrixEdgeWeightedDigraph;
-import sas.po2.lib.EdgeWeightedDigraph;
+import nl.hva.dmci.ict.sortingsearching.weigthedgraph.AdjMatrixEdgeWeightedDigraph;
+import nl.hva.dmci.ict.sortingsearching.weigthedgraph.EdgeWeightedDigraph;
 
 public class MainPracticum2 {
 
