@@ -2,10 +2,15 @@
 \contentsline {section}{\numberline {a}Resultaten van studenten sorteren met een advanced sort}{2}
 \contentsline {subsection}{\numberline {a.1}Quicksort implemenatie}{3}
 \contentsline {subsection}{\numberline {a.2}Resultaten experiment}{4}
-\contentsline {subsection}{\numberline {a.3}Effici\IeC {\"e}ntie}{6}
+\contentsline {subsubsection}{\numberline {a.2.1}Aantal swaps}{4}
+\contentsline {subsubsection}{\numberline {a.2.2}Aantal compares}{5}
+\contentsline {subsection}{\numberline {a.3}Effici\IeC {\"e}ntie}{5}
 \contentsline {section}{\numberline {b}Verbetering toevoegen aan algoritme}{6}
-\contentsline {subsection}{\numberline {b.1}Experiment}{6}
-\contentsline {subsection}{\numberline {b.2}Effici\IeC {\"e}ntie}{8}
+\contentsline {subsection}{\numberline {b.1}Median-of-Three implementatie}{6}
+\contentsline {subsection}{\numberline {b.2}Resultaten experiment}{7}
+\contentsline {subsubsection}{\numberline {b.2.1}Aantal swaps}{7}
+\contentsline {subsubsection}{\numberline {b.2.2}Aantal vergelijkingen}{7}
+\contentsline {subsection}{\numberline {b.3}Effici\IeC {\"e}ntie}{8}
 \contentsline {section}{\numberline {c}Resultaten in een Binary Search Tree en implementatie van rank()}{9}
 \contentsline {subsection}{\numberline {c.1}Duplicaten}{9}
 \contentsline {subsection}{\numberline {c.2}Rank()}{10}

@@ -19,8 +19,8 @@ public class Student implements Comparable<Student> {
 
     @Override
     public int compareTo(Student that) {
-        if (this.grade < that.getGrade()) return 1;
-        if (this.grade > that.getGrade()) return -1;
+        if (this.grade < that.getGrade()) return -1;
+        if (this.grade > that.getGrade()) return 1;
         if(this.studentNumber > that.getStudentNumber()) return -1;
         if(this.studentNumber < that.getStudentNumber()) return 1;
 
@@ -52,7 +52,7 @@ public class Student implements Comparable<Student> {
     }
 
     @Override
-    public String toString() {
-        return "Student{" + "group=" + group + ", studentNumber=" + studentNumber + ", grade=" + grade + '}';
+    public String toString() {return "" + getGrade();
+//        return "Student{" + "group=" + group + ", studentNumber=" + studentNumber + ", grade=" + grade + '}';
     }
 }

@@ -3,7 +3,7 @@
 \usepackage{natbib}
 \usepackage[dutch]{babel}
 \usepackage{graphicx}
-
+\usepackage{colortbl}
 \usepackage{blindtext}
 \usepackage[final]{pdfpages}
 \usepackage[a4paper, total={6.3in,9in},footskip=76pt]{geometry}
@@ -17,9 +17,9 @@
 \pgfplotsset{compat=1.8}
 \pgfplotsset{mystyle/.style={%
         width=6in,
-        ylabel={Tijd in milliseconden},
+        ylabel={Aantal Swaps},
         xlabel={Aantal studenten},
-        xmin=0,xmax=1280000,
+        xmin=0,xmax=160000,
         scaled y ticks = false,
         scaled x ticks = false,	
        	x tick label style={rotate=45, anchor=north east, inner sep=0mm},
@@ -187,10 +187,10 @@ public class Student implements Comparable<Student> {
     
     @Override
     public int compareTo(Student that) {
-        if (this.grade < that.getGrade()) return 1;
-        if (this.grade > that.getGrade()) return -1;
-        if(this.studentNumber > that.getStudentNumber()) return -1;
-        if(this.studentNumber < that.getStudentNumber()) return 1;
+        if (this.grade < that.getGrade()) return -1;
+        if (this.grade > that.getGrade()) return 1;
+        if(this.studentNumber < that.getStudentNumber()) return -1;
+        if(this.studentNumber > that.getStudentNumber()) return 1;
 
         return 0;
     }
@@ -203,233 +203,302 @@ Waarbij het met name gaat om de implementatie van de Comparable-interface. Als t
 \subsection{Quicksort implemenatie}
 Hieronder de Quicksort implementatie voor de experimenten in paragraaf a.2 met zoveel mogelijk uitleg in het codecommentaar:
 \begin{lstlisting}
-
     // De quicksort accepteert een lijst van objecten met een Comparable
     // interface (bijv. de Student-klasse), het beginpunt vanaf links,
     // en het beginpunt vanaf rechts 
     private void quicksort(Comparable[] list, int low, int high) {
-
         // Neem het middelpunt van de array als spil (draaipunt)
         Comparable pivot = list[low + (high - low) / 2];
-
         int i = low; // linkerkant
         int j = high; // rechterkant
-
+        // Partitioneren
         while (i <= j) {
             // Wanneer object vanaf links kleiner is dan de spil
             // Verschuif naar de volgende in de linkerlijst
-            while (list[i].compareTo(pivot) < 0) i++;
-
+            while (list[i].compareTo(pivot) < 0) {
+                i++;
+            }
             // Wanneer object vanaf rechts groter is dan de spil
             // Verschuif naar de volgende in de rechterlijst
-            while (list[j].compareTo(pivot) > 0) j--;
-
+            while (list[j].compareTo(pivot) > 0) {
+                j--;
+            }
             // Als er een index van de linkerlijst is gevonden, met een waarde
             // die groter is dan de spil, en een index in de rechterlijst met
             // een waarde die kleiner is dan de spil, moeten de 2 waarden
             // worden omgedraaid
             if (i <= j) {
-                Comparable temp = list[i];
-                list[i] = list[j];
-                list[j] = temp;
-                i++;
-                j--;
+                swap(list, i, j);
+                i++; j--;
             }
         }
         // Hetzelfde voor de rest van de linkerlijst
-        if (low < j) {
-            quicksort(list, low, j);
-        }
+        if (low < j) quicksort(list, low, j);
         // en voor de rechterlijst
-        if (high > i) {
-            quicksort(list, i, high);
-        }
+        if (high > i) quicksort(list, i, high);
+    }
+    private void swap(Comparable[] list, int i, int j) {
+        Comparable temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
+        swaps++; // Tel het aantal swaps
     }
 \end{lstlisting}
-
 \clearpage
+Om te laten zien dat het werkt, de output van de cijfers voor het en het sorten met een lijst van 15 elementen:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{quicksort_test.png}
+\end{figure}
+
 \subsection{Resultaten experiment}
 Het experiment bestond uit het meten van de tijd die de Quicksort implementatie in de vorige paragraaf nodig heeft om lijsten met verschillende aantallen studenten te sorteren.
 
-Om meetresultaten accurater te maken werd Java met de VM optie \textsf{-Djava.compiler=NONE} uitgevoerd om optimalisaties uit te schakelen. Die optie voorkomt dat Java het programma met extra optimalisaties gaat uitvoeren, wat anderszijds invloed zou hebben op de meetresultaten.
-
 \begin{lstlisting}
-int[] numberOfStudents = {10000, 20000, 40000, 80000, 
-160000, 320000, 640000, 1280000};
+int[] numberOfStudents = {10000, 20000, 40000, 80000, 160000};
 // N_EXPERIMENTS = 5
-long[][] quicksortResults = new long[numberOfStudents.length][N_EXPERIMENTS]; 
+// Houd alle resultaten bij in een 2-dimensionale array.
+// Hier mee kunnen we uiteindelijk het gemiddelde berekenen van ieder experiment
+long[][] quicksortResults = new long[numberOfStudents.length][N_EXPERIMENTS];
 
 for (int i = 0; i < numberOfStudents.length; i++) {
     for (int j = 0; j < N_EXPERIMENTS; j++) {
         ResultList list = StudentListGenerator.generate(numberOfStudents[i]);
         list.shuffle(); // StdRandom.shuffle()
-        long startTime = System.currentTimeMillis();
         list.quicksort(); // De Quicksort implementatie
-        long endTime = System.currentTimeMillis();
-        quicksortResults[i][j] = (endTime - startTime);
+        quicksortResults[i][j] = list.getSwaps();
     }
 }
 \end{lstlisting}
 
 Het experiment is meerdere keren uitgevoerd en daarvan is het gemiddelde genomen. Dit zijn de resultaten:
+Meetresultaten: 
 
+
+\subsubsection{Aantal swaps}
 \begin{center}
-\begin{table}[htb]
-\begin{tabular}{| l | l | l | l | l | l | l |}
-\hline
-Aantal studenten & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddelde\\ \hline
-10000 & 44 & 31 & 27 & 30 & 30 & 32\\ \hline
-20000 & 64 & 61 & 66 & 66 & 66 & 64\\ \hline
-40000 & 139 & 137 & 143 & 127 & 128 & 134\\ \hline
-80000 & 291 & 288 & 337 & 301 & 329 & 309\\ \hline
-160000 & 665 & 661 & 673 & 635 & 692 & 665\\ \hline
-320000 & 1478 & 1427 & 1408 & 1422 & 1433 & 1433\\ \hline
-640000 & 3045 & 3339 & 3059 & 3022 & 3128 & 3118\\ \hline
-1280000 & 7085 & 6897 & 7003 & 8066 & 6974 & 7205\\ \hline
-\end{tabular}
-\end{table}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l|l|l|l|l|l|}
+	\hline
+	Aantal studenten ($n$) & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddeld ($t$) \\
+	\hline
+	10000 & 33583 & 33790 & 33239 & 33678 & 33255 & 33509 \\
+	\hline
+	20000 & 72213 & 71764 & 71754 & 71722 & 71561 & 71802 \\
+	\hline
+	40000 & 152818 & 152305 & 152601 & 153322 & 151588 & 152526 \\
+	\hline
+	80000 & 323338 & 321402 & 325179 & 325067 & 323066 & 323610 \\
+	\hline
+	160000 & 686829 & 678957 & 687429 & 680257 & 683060 & 683306 \\
+	\hline
+	\end{tabular}
 \end{center}
 
-\begin{tikzpicture}
-  \begin{axis}[mystyle]
-\addlegendentry{$Run 1$}
-\addplot+[smooth] coordinates
-{(10000, 44) (20000, 64) (40000, 139) (80000, 291) (160000, 665) (320000, 1478) (640000, 3045) (1280000, 7085) };
-\addlegendentry{$Run 2$}
-\addplot+[smooth] coordinates
-{(10000, 31) (20000, 61) (40000, 137) (80000, 288) (160000, 661) (320000, 1427) (640000, 3339) (1280000, 6897) };
-\addlegendentry{$Run 3$}
-\addplot+[smooth] coordinates
-{(10000, 27) (20000, 66) (40000, 143) (80000, 337) (160000, 673) (320000, 1408) (640000, 3059) (1280000, 7003) };
-\addlegendentry{$Run 4$}
-\addplot+[smooth] coordinates
-{(10000, 30) (20000, 66) (40000, 127) (80000, 301) (160000, 635) (320000, 1422) (640000, 3022) (1280000, 8066) };
-\addlegendentry{$Run 5$}
-\addplot+[smooth] coordinates
-{(10000, 30) (20000, 66) (40000, 128) (80000, 329) (160000, 692) (320000, 1433) (640000, 3128) (1280000, 6974) };
+\subsubsection{Aantal compares}
+\begin{center}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l|l|l|l|l|l|}
+	\hline
+	Aantal studenten (n) & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddeld (t) \\
+	\hline
+	10000 & 118702 & 103213 & 110760 & 106625 & 96812 & 107222 \\
+	\hline
+	20000 & 233464 & 227495 & 253906 & 242096 & 241585 & 239709 \\
+	\hline
+	40000 & 525474 & 547440 & 506842 & 487517 & 553209 & 524096 \\
+	\hline
+	80000 & 1126047 & 1071245 & 1088298 & 1252791 & 1054870 & 1118650 \\
+	\hline
+	160000 & 2327269 & 2399714 & 2616240 & 2263507 & 2298539 & 2381053 \\
+	\hline
+	\end{tabular}
+\end{center}
 
-  \end{axis}
-\end{tikzpicture}
-\clearpage
+%De tijd die we gemeten hebben om 10.000 studenten te sorteren ligt is gemiddeld \textsf{51 ms}.
+%Hierbij hebben Java met de VM optie \textsf{-Djava.compiler=NONE} uitgevoerd om optimalisaties uit te schakelen. Die optie voorkomt dat Java het programma met extra optimalisaties gaat uitvoeren.
+
+
 \subsection{Efficiëntie}
 
-t is de gemiddelde tijd per aantal studenten n. Hier berekenen de gemiddelde factor waarmee de tijd groeit als het aantal studenten verdubbelt:
-
+Door de meetresultaten naast verschillende Big O notaties te houden kunnen we bepalen welke Big O notatie erbij hoort.
 \begin{center}
-\begin{table}[htb]
-\begin{tabular}{| l | l |}
-\hline
-t & t+1 / t \\ \hline
-32 & - \\ \hline
-64 & 64/32 = 2 \\ \hline
-134 & 134/64 = 2.093 \\ \hline
-309 & 309/134 = 2.306 \\ \hline
-665 & 665/309 = 2.152 \\ \hline
-1433 & 1433/665 = 2.154 \\ \hline
-3118 & 3118/1433 = 2.176 \\ \hline
-7085 & 7085/3118 = 2.272 \\ \hline
-\end{tabular}
-\end{table}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l||l|l||l||l|l|}
+ \hline
+ \multicolumn{2}{|c||}{Meetresultaten} & \multicolumn{2}{c||}{$O(n^m)$} & \multicolumn{1}{c||}{$O(log\ n)$} & \multicolumn{2}{|>{\columncolor[RGB]{117, 200, 32}}c|}{$O(n\ log\ n)$} \\
+ \hline	
+	\hline
+	$n$ & $t$ & Factor ($f$) & $m = log(f, 2)$ & Verschil & $t / log\ n$ & Factor ($f$) \\
+	\hline
+	10000 & 33509 & - & - & - & 3638.19 & - \\
+	\hline
+	20000 & 71802 & 2.14 & 1.10 & 38293 & 7250.17 & 1.99 \\
+	\hline
+	40000 & 152526 & 2.12 & 1.09 & 80724 & 14393.82 & 1.99 \\
+	\hline
+	80000 & 323610 & 2.12 & 1.09 & 171084 & 28663.97 & 1.99 \\
+	\hline
+	160000 & 683306 & 2.11 & 1.08 & 359696 & 57023.29 & 1.99 \\
+	\hline
+	\end{tabular}
 \end{center}
 
-Bij verdubbeling van het aantal studenten wordt de tijd gemiddeld:
+Uit de tabel blijkt dat $O(n\ log\ n)$ een constante heeft en de factor kom het dichtst bij een verdubbeling uit. Bij de andere Big O's zien we dat de waardes niet constant zijn. Het is geen O(n) want de factor verschilt per verdubbeling van het aantal studenten. Ook geen $O(log\ n)$ want de toename is niet constant. De goede is groen gemarkeerd en is dus $O(n\ log\ n)$.
 
-(2+2.093+2.306+2.152+2.154+2.176+2.172) / 7 = 2.15042857143
+%\begin{tikzpicture}
+%  \begin{axis}[mystyle]
+%\addlegendentry{$Big O$}
+%\addplot+[smooth] coordinates
+%{(10000, 33509) (20000, 71802) (40000, 152526) (80000, 323610) (160000, 683306) };
+%  \end{axis}
+%\end{tikzpicture}
 
-zo groot.
+% \begin{center}
+% 	\begin{tabular}{|l|l|l|l|l|l|l|}
+% 	\hline
+% 	n & t & Vergrotingsfactor (f) & log (f, 2) & (t + 1) - t & t / log n & Vergrotingsfactor (f) \\
+% 	\hline
+% 	10000 & 107222 & - & - & - & 11641.48 & - \\
+% 	\hline
+% 	20000 & 239709 & 2.24 & 1.16 & 132487 & 24204.50 & 2.08 \\
+% 	\hline
+% 	40000 & 524096 & 2.19 & 1.13 & 284387 & 49458.72 & 2.04 \\
+% 	\hline
+% 	80000 & 1118650 & 2.13 & 1.09 & 594554 & 99085.17 & 2.00 \\
+% 	\hline
+% 	160000 & 2381053 & 2.13 & 1.09 & 1262403 & 198703.75 & 2.01 \\
+% 	\hline
+% 	\end{tabular}
+% \end{center}
 
-(2 log 2.15042857143) / (2 log 2) = 1.10462421156...
-
-2^{1.10462421156} = 2.15042857143
-
-Als in de tabel te zien, wanneer n (aantal studenten) verdubbeld, verdubbeld ongeveer de tijd ook mee.
-
-De Big-O is ongeveer O(n^{1.10462421156})	
-
+\clearpage
 %----------------------------------------------------------------------------------------
 %	Opdracht b
 %----------------------------------------------------------------------------------------
 \section{Verbetering toevoegen aan algoritme}
 
-\subsection{Experiment}
+\subsection{Median-of-Three implementatie}
 
-Hetzelfde als het vorige experiment, maar dan met het Median-of-3 algoritme vanuit het boek.
+We nemen dezelfde code als van Quicksort als uitgangspunt.
+De implementatie van het partitioneren blijft hetzelfde, we veranderen de manier waarop de spil wordt berekend, door middel van een steekproef ter grootte van 3 en daarbij het middelste resultaat te nemen. Dit zou het partitioneren efficienter moeten maken, maar het berekenen van de spil wordt minder efficient.
+
+\begin{lstlisting}
+
+   int i = low, j = high;
+   int n = high - low + 1;
+   int mid = low + n / 2;
+
+   // Bepaal de spil nu door middel van een steekproefgrootte van 3 en
+   // pak daarvan de index van middelste waarde
+    int m = median3(list, low, mid, high);
+    Comparable pivot = list[m];
+    swap(list, m, low);
+
+\end{lstlisting}
+
+Hierbij gebruiken we een nieuwe median3() methode die de index van de waarde bepaald die in het midden van de steekproef ligt:
+
+\begin{lstlisting}
+private int median3(Comparable[] list, int a, int b, int c) {
+    if (list[a].compareTo(list[b]) <= 0) {
+        if (list[b].compareTo(list[c]) <= 0)
+            return b; // a <= b <= c, dus b ligt in het midden
+        else if (list[a].compareTo(list[c]) <= 0)
+            return c; // a <= c < b, dus c ligt in het midden
+        else
+            return a; // c < a < b, dus a ligt in het midden
+    } else {
+        if (list[a].compareTo(list[c]) <= 0)
+            return a; // b < a <= c, dus a ligt in het midden
+        else if (list[b].compareTo(list[c]) <= 0)
+            return c; // b <= c < a, dus c ligt in het midden
+        else
+            return b; // c < b < a, dus b ligt in het midden
+    }
+}
+\end{lstlisting}
+
+Om te laten zien dat het werkt, de output van de cijfers voor het en het sorten met een lijst van 15 elementen:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{median3_test.png}
+\end{figure}
+
+
+\subsection{Resultaten experiment}
+
+Hetzelfde als het vorige experiment, maar wordt de spil op een andere manier bepaald, via de Median-of-Three methode.
+
+\subsubsection{Aantal swaps}
 
 \begin{center}
-\begin{table}[htb]
-\begin{tabular}{| l | l | l | l | l | l | l |}
-\hline
-Aantal studenten & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddelde\\ \hline
-10000 & 67 & 33 & 30 & 29 & 34 & 38\\ \hline
-20000 & 82 & 67 & 61 & 75 & 68 & 70\\ \hline
-40000 & 146 & 149 & 150 & 158 & 158 & 152\\ \hline
-80000 & 384 & 363 & 324 & 333 & 341 & 349\\ \hline
-160000 & 689 & 730 & 738 & 727 & 787 & 734\\ \hline
-320000 & 1918 & 2452 & 1642 & 2040 & 2504 & 2111\\ \hline
-640000 & 4586 & 4493 & 3543 & 3555 & 3480 & 3931\\ \hline
-1280000 & 7865 & 7915 & 8285 & 8178 & 8754 & 8199\\ \hline
-\end{tabular}
-\end{table}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l|l|l|l|l|l|}
+	\hline
+	Aantal studenten (n) & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddeld (t) \\
+	\hline
+	10000 & 45119 & 44828 & 44879 & 45239 & 44388 & 44890 \\
+	\hline
+	20000 & 94704 & 94738 & 94758 & 94865 & 94472 & 94707 \\
+	\hline
+	40000 & 199194 & 196615 & 197957 & 199295 & 198320 & 198276 \\
+	\hline
+	80000 & 412507 & 415379 & 417447 & 416018 & 413535 & 414977 \\
+	\hline
+	160000 & 859779 & 865425 & 866948 & 861188 & 860469 & 862761 \\
+	\hline
+	\end{tabular}
 \end{center}
 
-\begin{tikzpicture}
-  \begin{axis}[mystyle]
-\addlegendentry{$Run 1$}
-\addplot+[smooth] coordinates
-{(10000, 67) (20000, 82) (40000, 146) (80000, 384) (160000, 689) (320000, 1918) (640000, 4586) (1280000, 7865) };
-\addlegendentry{$Run 2$}
-\addplot+[smooth] coordinates
-{(10000, 33) (20000, 67) (40000, 149) (80000, 363) (160000, 730) (320000, 2452) (640000, 4493) (1280000, 7915) };
-\addlegendentry{$Run 3$}
-\addplot+[smooth] coordinates
-{(10000, 30) (20000, 61) (40000, 150) (80000, 324) (160000, 738) (320000, 1642) (640000, 3543) (1280000, 8285) };
-\addlegendentry{$Run 4$}
-\addplot+[smooth] coordinates
-{(10000, 29) (20000, 75) (40000, 158) (80000, 333) (160000, 727) (320000, 2040) (640000, 3555) (1280000, 8178) };
-\addlegendentry{$Run 5$}
-\addplot+[smooth] coordinates
-{(10000, 34) (20000, 68) (40000, 158) (80000, 341) (160000, 787) (320000, 2504) (640000, 3480) (1280000, 8754) };
+\subsubsection{Aantal vergelijkingen}
 
-  \end{axis}
-\end{tikzpicture}
+\begin{center}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l|l|l|l|l|l|}
+	\hline
+	Aantal studenten (n) & Run 1 & Run 2 & Run 3 & Run 4 & Run 5 & Gemiddeld (t) \\
+	\hline
+	10000 & 96909 & 95691 & 94924 & 103175 & 101154 & 98370 \\
+	\hline
+	20000 & 212020 & 208320 & 232209 & 217651 & 212189 & 216477 \\
+	\hline
+	40000 & 474403 & 468668 & 472091 & 456692 & 461716 & 466714 \\
+	\hline
+	80000 & 1058276 & 1040906 & 954451 & 935949 & 994185 & 996753 \\
+	\hline
+	160000 & 2046106 & 2031889 & 2369335 & 2236124 & 2223647 & 2181420 \\
+	\hline
+	\end{tabular}
+\end{center}
+
+We zien ten opzichte van de resultaten zonder Median-of-3 dat het aantal swaps hoger is, maar het aantal vergelijkingen minder. Dit wijst dus op een goede verdeling van de twee lijsten. 
+
 \clearpage
 
 \subsection{Efficiëntie}
 
-t is de gemiddelde tijd per aantal studenten n. Hier berekenen de gemiddelde factor waarmee de tijd groeit als het aantal studenten verdubbelt:
-
 \begin{center}
-\begin{table}[htb]
-\begin{tabular}{| l | l |}
-\hline
-t & t+1 / t \\ \hline
-38 & - \\ \hline
-70 & 70/38 = 1.842 \\ \hline
-152 & 152/70 = 2.171 \\ \hline
-349 & 349/152 = 2.296 \\ \hline
-734 & 734/349 = 2.103 \\ \hline
-2111 & 2111/734 = 2.876 \\ \hline
-3931 & 3931/2111 = 1.862 \\ \hline
-8199 & 8199/3931 = 2.085 \\ \hline
-\end{tabular}
-\end{table}
+	\begin{tabular}{|>{\columncolor[RGB]{230, 242, 255}}l|l||l|l||l||l|l|}
+ \hline
+ \multicolumn{2}{|c||}{Meetresultaten} & \multicolumn{2}{c||}{$O(n^m)$} & \multicolumn{1}{c||}{$O(log\ n)$} & \multicolumn{2}{|>{\columncolor[RGB]{117, 200, 32}}c|}{$O(n\ log\ n)$} \\
+ \hline	
+	\hline
+	$n$ & $t$ & Factor ($f$) & $m = log(f, 2)$ & Verschil & $t / log\ n$ & Factor ($f$) \\
+	\hline
+	10000 & 44890 & - & - & - & 4873.87 & - \\
+	\hline
+	20000 & 94707 & 2.11 & 1.08 & 49817 & 9562.99 & 1.96 \\
+	\hline
+	40000 & 198276 & 2.09 & 1.07 & 103569 & 18711.22 & 1.96 \\
+	\hline
+	80000 & 414977 & 2.09 & 1.07 & 216701 & 36756.87 & 1.96 \\
+	\hline
+	160000 & 862761 & 2.08 & 1.06 & 447784 & 71999.17 & 1.96 \\
+	\hline
+	\end{tabular}
 \end{center}
 
-Bij verdubbeling van het aantal studenten wordt de tijd gemiddeld:
+Ook hier zien we weer dat $O(n\ log\ n)$ een constante heeft en de factor het dichtst bij een verdubbeling zit. Bij de andere Big O's zien we dat de waardes niet constant zijn. Het is geen O(n) want de factor verschilt per verdubbeling van het aantal studenten. Ook geen $O(log\ n)$ want de toename is niet constant. De goede is groen gemarkeerd en is dus $O(n\ log\ n)$.
 
-(1.842+2.171+2.296+2.103+2.876+1.862+2.085)/7 = 2.17642857143
-
-zo groot.
-
-(2 log 2.17642857143) / (2 log 2) = 1.12196267286...
-
-2^{1.12196267286} = 2.17642857143
-
-Als in de tabel te zien, wanneer n (aantal studenten) verdubbeld, verdubbeld ongeveer de tijd ook mee.
-
-De Big-O is ongeveer O(n^{1.12196267286})
-
-Verwaarloosbaar verschil met het vorige experiment.
+Wat nog op valt is dat de factor kleiner is ten opzichte dat van de Quicksort zonder Median-of-3.
 
 \clearpage
 %----------------------------------------------------------------------------------------
