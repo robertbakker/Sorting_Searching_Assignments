@@ -39,6 +39,6 @@ public class BoyerMoore {
             }
             // found.
         }
-        return "Woord: " + pat + " aantal woorden: " + amountOfWords + " Aantal checks: " + amountOfChecks;
+        return "BoyerMoore woord:: " + pat + " aantal woorden: " + amountOfWords + " Aantal checks: " + amountOfChecks;
     }
 }

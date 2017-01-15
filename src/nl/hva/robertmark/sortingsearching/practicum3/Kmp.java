@@ -21,20 +21,23 @@ public class Kmp {
         }
     }
 
-    public int search(String txt) { // Simulate operation of DFA on txt.
+    public String search(String txt) { // Simulate operation of DFA on txt.
         int amountOfChecks = 0;
         int amountOfWords = 0;
 
-        int i, j, N = txt.length(), M = pat.length();
-        for (i = 0, j = 0; i < N && j < M; i++)
+        int M = pat.length();
+        int N =txt.length();
+        int i, j;
+        for(i=0, j = 0; i < N && j < M; i++){
             j = dfa[txt.charAt(i)][j];
-        amountOfChecks++;
-        if (j == M) {
-            amountOfWords++;
-            j=0;
-
-        } // found (hit end of pattern)
-        else return N; // not found (hit end of text)
+            amountOfChecks++;
+            if(j == M){
+                amountOfWords++;
+                j=0;
+            }
+        }
+        return "KMP WOORD: " + pat + " aantal woorden: " + amountOfWords + " Aantal vergelijkinge: " + amountOfChecks;
     }
+
     // See page 769.
 }
